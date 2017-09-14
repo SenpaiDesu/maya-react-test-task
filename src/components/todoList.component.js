@@ -7,21 +7,14 @@ import TodoItem from './todoItem.component';
 class TodoListComponent extends Component {
   constructor(){
     super();
-    this.onDelete = this.onDelete.bind(this);
     this.filterList = this.filterList.bind(this);
     this.onFilterTitleChange = this.onFilterTitleChange.bind(this);
     this.onFilterDateChange = this.onFilterDateChange.bind(this);
-    this.toggleTypingMode = this.toggleTypingMode.bind(this);
 
     this.state = {
       title: '',
       createdAt: '',
-      isTypingMode: false,
     }
-  }
-
-  onDelete(id){
-    this.props.dispatch(deleteItem(id));
   }
 
   onFilterTitleChange(e){
