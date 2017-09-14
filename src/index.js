@@ -6,6 +6,8 @@ import store from './redux/store';
 import TodoApp from './App';
 import registerServiceWorker from './registerServiceWorker';
 
+import './index.css';
+
 //import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(
