@@ -18,8 +18,9 @@ html {
 }
 
 .todo-list {
-  flex: 10 0 auto;
+  flex-grow: 5;
   display: flex;
+  flex-wrap: wrap;
   padding: 1em;  
 }
 
@@ -55,10 +56,10 @@ h3 {
 }
 
 .todo-filter {
-  flex: 2 0 auto;
+  flex: 1 0 auto;
 }
 
-input, .add-btn {
+input, .add-btn, .update-btn {
   display: block;
   width: 100%;
   margin-top: 1em;
@@ -67,11 +68,18 @@ input, .add-btn {
   font-size: 1.1em;
 }
 
-.add-item .add-btn {
+.add-item .add-btn, .update-btn {
   margin-bottom:  1em;
-  background: #00aa00;
   color: #eee;
   cursor: pointer;
+}
+
+.add-btn {
+  background: #00aa00;
+}
+
+.update-btn {
+  background: #ddaa00;
 }
 
 .error-msg {

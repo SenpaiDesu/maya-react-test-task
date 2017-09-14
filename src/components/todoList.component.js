@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { deleteItem } from '../redux/actions';
+import TodoItem from './todoItem.component';
 
 class TodoListComponent extends Component {
   constructor(){
@@ -10,10 +11,12 @@ class TodoListComponent extends Component {
     this.filterList = this.filterList.bind(this);
     this.onFilterTitleChange = this.onFilterTitleChange.bind(this);
     this.onFilterDateChange = this.onFilterDateChange.bind(this);
+    this.toggleTypingMode = this.toggleTypingMode.bind(this);
 
     this.state = {
       title: '',
-      createdAt: ''
+      createdAt: '',
+      isTypingMode: false,
     }
   }
 
@@ -29,31 +32,30 @@ class TodoListComponent extends Component {
 
   onFilterDateChange(e){
     this.setState({
-      date: e.target.value
+      createdAt: e.target.value
     })
   }
 
   filterList(){
-    let list = [];
-    this.props.list.map((item, index) => {
-      const inputTitle = this.state.title.toLowerCase();
-      const itemTitle = item.title.toLowerCase() || '';
-      const inputDate = this.state.createdAt.toLowerCase();
-      const itemDate = item.createdAt.toLowerCase() || '';
-      if (itemTitle.includes(inputTitle) && itemDate.includes(inputDate)) 
-        list.push(
-          <div className='todo-item' key={index}>
-            <button className='close-btn' onClick={ () => { this.onDelete(index) }}>X</button>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <p>Created at: {item.createdAt}</p>
-          </div>
-        );
+    return this.props.list.filter(item => {
+      return item.title.toLowerCase().indexOf(this.state.title.toLowerCase()) !== -1 &&
+        item.createdAt.indexOf(this.state.createdAt) !== -1;
     });
-    return list;
+  }
+
+  toggleTypingMode(){
+    this.setState({ isTypingMode: !this.state.isTypingMode });
+
   }
 
   render(){
+    let template = [];
+    this.filterList().map((item, index) => {
+      template.push(
+        <TodoItem index={index} data={item} />
+      );
+    });
+    
     return (
       <div className='main'>
         <div className='todo-filter'>
@@ -61,7 +63,7 @@ class TodoListComponent extends Component {
           <input type="text" onChange={this.onFilterDateChange} placeholder='filter by date'/>
         </div>
         <div className='todo-list'>
-          { this.filterList() }
+          {template}
         </div>
       </div>
     );

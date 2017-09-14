@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, reset } from 'redux-form';
 
 import { createItem } from '../redux/actions';
 
-const required = value => (value ? undefined : 'Required')
+const required = value => (value ? undefined : 'Required');
 
 class AddTodoComponent extends Component {
   constructor(){
@@ -14,6 +13,7 @@ class AddTodoComponent extends Component {
 
   onCreate(values){
     this.props.dispatch(createItem(values));
+    this.props.dispatch(reset('addTodo'));
   }
 
   renderField({ input, label, meta: { touched, error } }){
@@ -36,7 +36,12 @@ class AddTodoComponent extends Component {
           type='text' 
           label='Title..' 
         />
-        <Field name='description' component='input' type='text' placeholder='Description..' validate=''/>
+        <Field 
+          name='description' 
+          component={this.renderField}
+          type='text' 
+          label='Description..' 
+        />
         <button className='add-btn' type='submit' disabled={submitting}>ADD ITEM</button>
       </form>
     )
@@ -44,5 +49,5 @@ class AddTodoComponent extends Component {
 }
 
 export default reduxForm({
-  form: 'addTodo'
+  form: 'addItem'
 })(AddTodoComponent);

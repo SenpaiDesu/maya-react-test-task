@@ -29,6 +29,7 @@ const TodoReducer = (state = defaultState, action) => {
       });
     }
     case e.ITEM_UPDATED: {
+      console.log(action.data);
       return state.update(action.id, item => ({
         ...item,
         ...action.data,
