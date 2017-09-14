@@ -52,7 +52,7 @@ class TodoListComponent extends Component {
     let template = [];
     this.filterList().map((item, index) => {
       template.push(
-        <TodoItem index={index} data={item} />
+        <TodoItem index={index} data={item} key={index} />
       );
     });
     
